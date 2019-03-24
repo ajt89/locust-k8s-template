@@ -2,6 +2,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: locust-k8s-slave
+  namespace: performance
   labels:
     name: locust-k8s-slave
     role: slave
@@ -16,6 +17,13 @@ spec:
       - name: locust-k8s-slave
         image: ajt89/locust-k8s-template:active
         imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 500m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 128Mi
         ports:
             - containerPort: 8089
               protocol: TCP
