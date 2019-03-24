@@ -17,14 +17,11 @@ spec:
         image: ajt89/locust-k8s-template:active
         imagePullPolicy: Always
         ports:
-            - name: locust-sa-web
-              containerPort: 8089
+            - containerPort: 8089
               protocol: TCP
-            - name: locust-sa-p1
-              containerPort: 5557
+            - containerPort: 5557
               protocol: TCP
-            - name: locust-sa-p2
-              containerPort: 5558
+            - containerPort: 5558
               protocol: TCP
         env:
           - name: TARGET_URL

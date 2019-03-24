@@ -2,23 +2,20 @@ kind: Service
 apiVersion: v1
 metadata:
   name: locust-k8s-master
-  labels:
-    name: locust-k8s-master
-    role: master
 spec:
+  selector:
+    app: locust-k8s-master
   ports:
     - port: 8089
-      targetPort: locust-ma-web
+      targetPort: 8089
       protocol: TCP
       name: locust-ma-web
     - port: 5557
-      targetPort: locust-ma-p1
+      targetPort: 5557
       protocol: TCP
       name: locust-ma-p1
     - port: 5558
-      targetPort: locust-ma-p2
+      targetPort: 5558
       protocol: TCP
       name: locust-ma-p2
-  selector:
-    app: locust-k8s-master
-  type: LoadBalancer
+  type: NodePort
