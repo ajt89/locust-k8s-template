@@ -3,8 +3,7 @@
 Ideally this repo should show how to setup a "perf" namespace to generate load and test the "stage" namespace all in the wonderful world of kubernetes. All work done has been done in minikube.
 
 TODO:
-1. Figure out k8s services
-2. Get locust deployment to send load at flask deployment
+1. Get locust deployment to send load at flask deployment
 
 STRETCH GOALS:
 1. Implement with minishift?
@@ -18,3 +17,4 @@ DONE:
 6. ~~Create k8s deployment for the flask service~~
 7. ~~Create k8s deployments for the locust test~~
 8. ~~Create k8s config map for the locust test~~
+9. ~~~Figure out k8s services~~
