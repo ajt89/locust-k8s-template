@@ -18,4 +18,4 @@ spec:
       targetPort: 5558
       protocol: TCP
       name: locust-ma-p2
-  type: NodePort
+  type: LoadBalancer

@@ -16,6 +16,5 @@ spec:
         image: ajt89/simple-flask-app:active
         imagePullPolicy: Always
         ports:
-            - name: flask-app-web
-              containerPort: 8080
+            - containerPort: 8080
               protocol: TCP
