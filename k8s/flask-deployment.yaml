@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: flask-app
+  labels:
+    name: flask-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: ajt89/simple-flask-app:active
+        imagePullPolicy: Always
+        ports:
+            - name: flask-app-web
+              containerPort: 8080
+              protocol: TCP
