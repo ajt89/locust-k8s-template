@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: locust-slave-configmap
+data:
+  MODE: --slave --master-host=locust-k8s-master
+

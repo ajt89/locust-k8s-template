@@ -1,0 +1,7 @@
+.vscode
+app
+.venv
+.gitignore
+Dockerfile
+*.md
+k8s

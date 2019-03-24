@@ -1,0 +1,49 @@
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: locust-k8s-slave
+  labels:
+    name: locust-k8s-slave
+    role: slave
+spec:
+  replicas: 1
+  template:
+    metadata: {labels: {app: locust-k8s-slave}}
+    spec:
+      containers:
+      - name: locust-k8s-slave
+        image: ajt89/locust-k8s-template:active
+        imagePullPolicy: Always
+        ports:
+            - name: locust-sa-web
+              containerPort: 8089
+              protocol: TCP
+            - name: locust-sa-p1
+              containerPort: 5557
+              protocol: TCP
+            - name: locust-sa-p2
+              containerPort: 5558
+              protocol: TCP
+        env:
+          - name: TARGET_URL
+            valueFrom:
+              configMapKeyRef:
+                name: locust-configmap
+                key: TARGET_URL
+          - name: LOCUST_OPTS
+            valueFrom:
+              configMapKeyRef:
+                name: locust-configmap
+                key: LOCUST_OPTS
+          - name: LOCUST_CLASS
+            valueFrom:
+              configMapKeyRef:
+                name: locust-configmap
+                key: LOCUST_CLASS
+          - name: MODE
+            valueFrom:
+              configMapKeyRef:
+                name: locust-slave-configmap
+                key: MODE
+

@@ -1,5 +1,7 @@
 LOCUST_CLASS = WebsiteUserA
 TARGET_URL = http://127.0.0.1:5000
+TAG = active
+DOCKER_HOST = ajt89
 
 setup-locust:
 	- virtualenv -p python3.7 venv; \
@@ -29,3 +31,9 @@ start-flask:
 	- . app/venv/bin/activate; \
 	export FLASK_APP=app/app.py; \
 	flask run
+
+build-docker:
+	-docker build -t $(DOCKER_HOST)/locust-k8s-template:$(TAG) .
+
+push-tag-docker:
+	-docker push $(DOCKER_HOST)/locust-k8s-template:$(TAG)
