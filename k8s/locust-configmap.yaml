@@ -2,7 +2,8 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: locust-configmap
+  namespace: performance
 data:
-  TARGET_URL: http://192.168.99.100:31667
+  TARGET_URL: http://192.168.99.100:30639
   LOCUST_OPTS: --no-reset-stats
 

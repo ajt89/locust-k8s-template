@@ -2,6 +2,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: locust-k8s-master
+  namespace: performance
   labels:
     name: locust-k8s-master
     role: master
@@ -16,6 +17,13 @@ spec:
       - name: locust-k8s-master
         image: ajt89/locust-k8s-template:active
         imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi
         ports:
             - containerPort: 8089
               protocol: TCP
