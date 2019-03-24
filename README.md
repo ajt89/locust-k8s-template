@@ -17,4 +17,4 @@ DONE:
 6. ~~Create k8s deployment for the flask service~~
 7. ~~Create k8s deployments for the locust test~~
 8. ~~Create k8s config map for the locust test~~
-9. ~~~Figure out k8s services~~
+9. ~~Figure out k8s services~~
