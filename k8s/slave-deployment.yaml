@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -9,7 +8,9 @@ metadata:
 spec:
   replicas: 1
   template:
-    metadata: {labels: {app: locust-k8s-slave}}
+    metadata:
+      labels:
+        app: locust-k8s-slave
     spec:
       containers:
       - name: locust-k8s-slave
@@ -36,14 +37,6 @@ spec:
               configMapKeyRef:
                 name: locust-configmap
                 key: LOCUST_OPTS
-          - name: LOCUST_CLASS
-            valueFrom:
-              configMapKeyRef:
-                name: locust-configmap
-                key: LOCUST_CLASS
           - name: MODE
-            valueFrom:
-              configMapKeyRef:
-                name: locust-slave-configmap
-                key: MODE
+            value: --slave --master-host=locust-k8s-master
 
