@@ -7,4 +7,7 @@ WORKDIR /app
 COPY . .
 
 ARG FLASK_APP=/app/app.py
-CMD ["flask", "run", "--port", "8080"]
+
+EXPOSE 8080
+
+CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8080"]

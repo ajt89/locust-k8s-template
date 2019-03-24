@@ -41,5 +41,5 @@ build-docker-flask:
 	-docker build -t $(DOCKER_HOST)/simple-flask-app:$(TAG) app/
 
 push-tag-docker-flask:
-	-docker push $(DOCKER_HOST)/simple-flask-app:$(TAG) app/
+	-docker push $(DOCKER_HOST)/simple-flask-app:$(TAG)
 
