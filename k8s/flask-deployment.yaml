@@ -4,6 +4,7 @@ metadata:
   name: flask-app
   labels:
     name: flask-app
+  namespace: stage
 spec:
   replicas: 1
   template:
