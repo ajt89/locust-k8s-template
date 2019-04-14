@@ -1,4 +1,4 @@
-FROM python:3.6.8-slim
+FROM python:3.7.3-slim-stretch
 
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
