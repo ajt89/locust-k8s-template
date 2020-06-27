@@ -1,4 +1,4 @@
-FROM python:3.7.2-alpine3.9
+FROM python:3.6.10-alpine3.12
 
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
