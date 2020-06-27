@@ -1,8 +1,10 @@
-from locust import HttpLocust, TaskSet
+from locust import HttpUser, task, between
 
 
-class UserBehavior(TaskSet):
+class WebsiteUser(HttpUser):
+    wait_time = between(1, 1)
 
+    @task
     def index(self):
         url = '/'
         name = 'index'
@@ -19,6 +21,7 @@ class UserBehavior(TaskSet):
         else:
             response.failure('Got wrong response')
 
+    @task
     def route_a(self):
         url = '/a'
         name = 'route_a'
@@ -35,6 +38,7 @@ class UserBehavior(TaskSet):
         else:
             response.failure('Got wrong response')
 
+    @task
     def route_b(self):
         url = '/b'
         name = 'route_b'
@@ -50,15 +54,3 @@ class UserBehavior(TaskSet):
             response.success()
         else:
             response.failure('Got wrong response')
-
-    tasks = {
-        index: 1,
-        route_a: 2,
-        route_b: 1,
-    }
-
-
-class WebsiteUser(HttpLocust):
-    task_set = UserBehavior
-    min_wait = 1000
-    max_wait = 1000

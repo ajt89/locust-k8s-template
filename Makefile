@@ -2,9 +2,13 @@ TARGET_URL = http://127.0.0.1:5000
 TAG = active
 DOCKER_HOST = ajt89
 
+
+clean-locust:
+	- rm -rf .venv
+
 setup-locust:
-	- virtualenv -p python3.7 venv; \
-	. venv/bin/activate venv; \
+	- python3 -m venv .venv; \
+	. .venv/bin/activate; \
 	pip install -r requirements.txt
 
 update-locust:
@@ -15,17 +19,20 @@ start-locust:
 	- deactivate; \
 	. venv/bin/activate; \
 	pkill locust; \
-	locust -H $(TARGET_URL) --no-reset-stats
+	locust -H $(TARGET_URL)
 
 build-docker-locust:
-	-docker build -t $(DOCKER_HOST)/locust-k8s-template:$(TAG) .
+	- docker build -t $(DOCKER_HOST)/locust-k8s-template:$(TAG) .
 
 push-tag-docker-locust:
-	-docker push $(DOCKER_HOST)/locust-k8s-template:$(TAG)
+	- docker push $(DOCKER_HOST)/locust-k8s-template:$(TAG)
+
+clean-flask:
+	- rm -rf app/.venv
 
 setup-flask:
-	- virtualenv -p python3.7 app/venv; \
-	. app/venv/bin/activate; \
+	- python3 -m venv app/.venv; \
+	. app/.venv/bin/activate; \
 	pip install -r app/requirements.txt
 
 update-flask:
@@ -38,8 +45,8 @@ start-flask:
 	flask run
 
 build-docker-flask:
-	-docker build -t $(DOCKER_HOST)/simple-flask-app:$(TAG) app/
+	- docker build -t $(DOCKER_HOST)/simple-flask-app:$(TAG) app/
 
 push-tag-docker-flask:
-	-docker push $(DOCKER_HOST)/simple-flask-app:$(TAG)
+	- docker push $(DOCKER_HOST)/simple-flask-app:$(TAG)
 

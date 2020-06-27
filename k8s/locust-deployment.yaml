@@ -1,0 +1,129 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: performance
+  labels:
+    name: performance
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: locust-k8s-master
+spec:
+  selector:
+    app: locust-k8s-master
+  ports:
+    - port: 8089
+      targetPort: 8089
+      protocol: TCP
+      name: locust-ma-web
+    - port: 5557
+      targetPort: 5557
+      protocol: TCP
+      name: locust-ma-p1
+    - port: 5558
+      targetPort: 5558
+      protocol: TCP
+      name: locust-ma-p2
+  type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: locust-configmap
+  namespace: performance
+data:
+  TARGET_URL: http://192.168.99.100:30639
+
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: locust-k8s-master
+  namespace: performance
+  labels:
+    name: locust-k8s-master
+    role: master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: locust-k8s-master
+    spec:
+      containers:
+      - name: locust-k8s-master
+        image: ajt89/locust-k8s-template:active
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+        ports:
+            - containerPort: 8089
+              protocol: TCP
+            - containerPort: 5557
+              protocol: TCP
+            - containerPort: 5558
+              protocol: TCP
+        env:
+          - name: TARGET_URL
+            valueFrom:
+              configMapKeyRef:
+                name: locust-configmap
+                key: TARGET_URL
+          - name: MODE
+            value: --master
+
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: locust-k8s-worker
+  namespace: performance
+  labels:
+    name: locust-k8s-worker
+    role: worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: locust-k8s-worker
+    spec:
+      containers:
+      - name: locust-k8s-worker
+        image: ajt89/locust-k8s-template:active
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        ports:
+            - containerPort: 8089
+              protocol: TCP
+            - containerPort: 5557
+              protocol: TCP
+            - containerPort: 5558
+              protocol: TCP
+        env:
+          - name: TARGET_URL
+            valueFrom:
+              configMapKeyRef:
+                name: locust-configmap
+                key: TARGET_URL
+          - name: MODE
+            value: --worker --master-host=locust-k8s-master
+
